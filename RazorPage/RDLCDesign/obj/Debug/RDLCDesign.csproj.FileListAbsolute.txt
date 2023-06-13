@@ -1,0 +1,10 @@
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\bin\Debug\RDLCDesign.exe.config
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\bin\Debug\RDLCDesign.exe
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\bin\Debug\RDLCDesign.pdb
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.csproj.AssemblyReference.cache
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.csproj.SuggestedBindingRedirects.cache
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.Properties.Resources.resources
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.csproj.GenerateResource.cache
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.csproj.CoreCompileInputs.cache
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.exe
+D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RDLCDesign\obj\Debug\RDLCDesign.pdb

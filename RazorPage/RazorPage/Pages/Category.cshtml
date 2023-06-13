@@ -1,0 +1,81 @@
+﻿@page
+@model RazorPage.Pages.CategoryModel
+@{
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+    <div id="content-left">
+        <h3>CATEGORY</h3>
+        <ul>
+            @foreach (var cate in Model.Category)
+            {
+                <a asp-page="./category" asp-route-id="@cate.CategoryId">
+                <li>
+                        @Html.DisplayFor(modelCate => cate.CategoryName)
+                </li>
+                </a>
+            }
+        </ul>
+    </div>
+    <div id="content-right">
+        <h3>
+            Product of @ViewData["cateName"]
+        </h3>
+        <select id="filterCategory">
+                <option id="descFilter" value="desc" selected>Descending</option>
+                <option id="ascFilter" value="asc">Ascending</option>
+            </select>
+            <div class="container">
+                <div class="row">
+                @foreach (var hot in Model.Product)
+                {
+                    <div class="col-md-4">
+                        <a asp-page="/product/detail" asp-route-id="@hot.ProductId"><img src="img/1.jpg" width="100%" /></a>
+                        <div class="name"><a href="~/product/detail">@Html.DisplayFor(hot_p => hot.ProductName)</a></div>
+                        <div class="price">$ @Html.DisplayFor(hot_p => hot.UnitPrice)</div>
+                        <div><a asp-page="./account/cart" asp-page-handler="buy" asp-route-id="@hot.ProductId">Buy now</a></div>
+                    </div>
+                    <div id="cateId" style="display: none">@hot.CategoryId</div>
+                }
+                </div>
+            </div>
+            <div class="msg-error" style="text-align:left">
+                @ViewData["msg"]
+            </div>
+    
+            <paging class="pagination pagination-wrap" total-records="@Model.TotalProducts"
+                    show-total-pages="false" show-total-records="false" 
+                    page-size="@Model.PageSize" page-no="@Model.PageNo"></paging>
+        </div>
+}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/libs/css/bootstrap.css">
+    <script>
+        $(document).ready(function () {
+        $('#filterCategory').change(function () {
+            var url_string = location.href;
+            var url = new URL(url_string);
+            var c = url.searchParams.get("p");
+            console.log(c);
+            if(c != 1 && c != null){
+                window.location = '/category?id=' + $('#cateId').text() + '&selected=' + $('#filterCategory').val() + '&p='+ c
+            }else{
+                window.location = '/category?id=' + $('#cateId').text() + '&selected=' + $('#filterCategory').val()
+            }
+            });
+        });
+    </script>
+
+<script>
+       var url_string = location.href;
+       var url = new URL(url_string);
+       var c = url.searchParams.get("selected");
+       if(c == "asc"){
+        document.getElementById("ascFilter").setAttribute('selected', 'selected');
+       }
+</script>

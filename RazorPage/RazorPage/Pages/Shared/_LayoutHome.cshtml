@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo">
+                <a href="~/index">
+                    <img src="~/img/logo.png" />
+                </a>
+            </div>
+            <div id="banner">
+                <ul>
+                    @{
+                        string? cart = Context.Session.GetString("cart");
+                        if (cart is not null)
+                        {
+                            var carts = JsonSerializer.Deserialize<List<RazorPage.Pages.Account.CartModel.Item>>(cart);
+                            int numOfItem = carts.Count;
+                            if (numOfItem >= 0)
+                            {
+                                <a href="~/account/cart">Cart: @numOfItem</a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="~/account/cart">Cart: 0</a>
+
+                        }
+                    }
+
+                    @if (Context.Session.GetString("CusSession") == null)
+                    {
+                        <li><a href="~/account/signin">SignIn</a></li>
+                        <li><a href="~/account/signup">SignUp</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/account/profile">Profile</a></li>
+                        <li><a href="~/account/signout">SignOut</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            @RenderBody()
+        </div>
+        <div id="footer">footer</div>
+    </div>
+</body>
+</html>

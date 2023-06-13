@@ -1,0 +1,11 @@
+﻿@{
+
+    Layout = "_LayoutHome";
+
+
+    if(Context.Session.GetString("EmpSession") != null){
+        Layout = "_LayoutAdmin";
+    }
+
+    //Layout = "_LayoutAdmin";
+}

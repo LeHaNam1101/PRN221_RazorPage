@@ -1,0 +1,71 @@
+﻿@page
+@model RazorPage.Pages.Account.SignUpModel
+@{
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+<div id="form">
+    <div id="form-title">
+        <span><a href="~/account/signup" style="color: red;">SIGN UP</a></span>
+        <span><a href="~/account/signin">SIGN IN</a></span>
+    </div>
+    <div id="form-content">
+        <div class="msg-error" style="text-align: left">
+            @ViewData["msg"]
+        </div>
+        <form method="post">
+            <input asp-for="Customer.CustomerId" value="1" type="hidden"/>
+
+            <label>Company name<span style="color: red;">*</span></label><br />
+            <input asp-for="Customer.CompanyName"/><br />
+            <span class="msg-error" asp-validation-for="Customer.CompanyName"></span><br />
+
+            <label>Contact name<span style="color: red;">*</span></label><br />
+            <input asp-for="Customer.ContactName"/><br />
+            <span class="msg-error" asp-validation-for="Customer.ContactName"></span><br />
+
+            <label>Contact title<span style="color: red;">*</span></label><br />
+            <input asp-for="Customer.ContactTitle" /><br />
+            <span class="msg-error" asp-validation-for="Customer.ContactTitle"></span><br />
+
+            <label>Address<span style="color: red;">*</span></label><br />
+            <input asp-for="Customer.Address" /><br />
+            <span class="msg-error" asp-validation-for="Customer.Address"></span><br />
+
+            <label>Email<span style="color: red;">*</span></label><br />
+            <input asp-for="Account.Email" /><br />
+            <span class="msg-error" asp-validation-for="Account.Email"></span><br />
+
+            <label>Password<span style="color: red;">*</span></label><br />
+            <input asp-for="Account.Password" id="password" onkeyup='check();' /><br />
+            <span class="msg-error" asp-validation-for="Account.Password"></span><br />
+
+            <label>Re-Password<span style="color: red;">*</span></label><br />
+            <input asp-for="Account.Password" id="confirm_password" onkeyup='check();' /><br />
+            <span class="msg-error" asp-validation-for="Account.Password"></span><br />
+            <span id='message'></span>
+            <div></div>
+            <input type="submit" id="submit" value="SIGN UP" style="margin-bottom: 30px;" />
+        </form>
+    </div>
+</div>
+}
+
+<script>
+    var check = function () {
+        if (document.getElementById('password').value ==
+            document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'matching';
+            document.getElementById('submit').disabled = '';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'not matching';
+            document.getElementById('submit').disabled = 'disabled';
+        }
+    }
+</script>

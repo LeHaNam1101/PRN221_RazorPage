@@ -1,0 +1,186 @@
+﻿@page
+@model RazorPage.Pages.Admin.ProductModel
+@{
+}
+<div id="content-left">
+    <ul>
+        <a href="~/admin/dashboard">
+        <li>Dashboard</li></a>
+        <a href="~/admin/order">
+        <li>Orders</li></a>
+        <a href="~/admin/product">
+        <li>Products</li></a>
+        <a href="~/admin/customer">
+        <li>Customers</li></a>
+    </ul>
+</div>
+<div id="content-right">
+    <div class="path-admin">PRODUCTS LIST</div>
+    <div class="content-main">
+        <div id="content-main-dashboard">
+            <div id="product-title-header">
+                <div id="product-title-1" style="width: 25%;">
+                    <b>Filter by Catetory:</b>
+                    <br />
+                    <select id="filterByCategory">
+                        <option value="" disabled selected>--- Select category ---</option>
+                        @foreach (var cate in Model.Category)
+                        {
+                            <option id="cate_@cate.CategoryId" value="@cate.CategoryId">@cate.CategoryName</option>
+                        }
+                    </select>
+                </div>
+                <div id="product-title-2" style="width: 55%;">
+                    <input type="text" id="txtSearch" placeholder="Enter product name to search" value="@ViewData["txtSearch"]" />
+                    <button id="btnSearch" class="btn btn-outline-dark">Search</button>
+                </div>
+                <div id="product-title-3" style="width: 20%;">
+                    <a href="~/admin/createproduct">Create a new Product</a>
+                    <br />
+                    <form asp-page-handler="ExcelUpload" method="post" enctype="multipart/form-data">
+                        <input id="fileInput" type="file" asp-for="UploadedExcelFile" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                        <input id="btnFileInput" type="submit" class="btn btn-outline-success m-3" value="Import xlsx"/>
+                    </form>
+                </div>
+            </div>
+
+            <div id="order-table-admin">
+                    @if (HttpContext.Session.GetString("msgExcel") != null)
+                    {
+                        <span id="errMsg" class="msg-error">
+                            @HttpContext.Session.GetString("msgExcel")
+                        </span>
+                        <br />
+
+                        HttpClient httpClient = new HttpClient();
+                        httpClient.Timeout = TimeSpan.FromSeconds(2);
+                        HttpContext.Session.Remove("msgExcel");
+                    }
+
+
+                @if (HttpContext.Session.GetString("msgErrDel") != null)
+                {
+                    <span id="errMsg" class="msg-error">
+                        @HttpContext.Session.GetString("msgErrDel")
+                    </span>
+                    <br />
+
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.Timeout = TimeSpan.FromSeconds(2);
+                    HttpContext.Session.Remove("msgErrDel");
+                }
+
+
+                <div class="justify-content-start">
+                    <form method="post" asp-page-handler="Export">
+                        <input type="submit" class="btn btn-outline-dark m-4" value="Export all to xlsx" />
+                    </form>
+                </div>
+                <table id="orders">
+                    <tr>
+                        <th>ProductID</th>
+                        <th>ProductName</th>
+                        <th>UnitPrice</th>
+                        <th>Unit</th>
+                        <th>UnitsInStock</th>
+                        <th>Category</th>
+                        <th>Discontinued</th>
+                        <th></th>
+                    </tr>
+                    @if (Model.Product.Count < 1)
+                    {
+                        <tr>
+                            <td colspan="8" style="text-align: center">
+                                @ViewData["msgNullProduct"]
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+
+                    </tr>
+                    @foreach (var pro in Model.Product)
+                    {
+                        <tr>
+                            <td>@pro.ProductId</td>
+                            <td>@pro.ProductName</td>
+                            <td>
+                                @String.Format("{0:.##}", pro.UnitPrice)
+                            </td>
+                            <td>@pro.QuantityPerUnit</td>
+                            <td>@pro.UnitsInStock</td>
+                            <td>@pro.Category.CategoryName</td>
+                            @if (pro.Discontinued == true)
+                            {
+                                <td>true</td>
+                            }
+                            else
+                            {
+                                <td>false</td>
+                            }
+                            <td>
+                                <a asp-page="edit" asp-route-id="@pro.ProductId">Edit</a> &nbsp; | &nbsp;
+                                <a asp-page="product" asp-page-handler="delete" asp-route-id="@pro.ProductId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <paging class="pagination pagination-wrap mt-3" total-records="@Model.TotalProducts"
+                    show-total-pages="false" show-total-records="false"
+                    page-size="@Model.PageSize" page-no="@Model.PageNo"></paging>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="~/libs/css/bootstrap.css">
+
+<script>
+    $(document).ready(function () {
+        $('#filterByCategory').change(function () {
+            window.location = '/admin/product?category=' + $('#filterByCategory').val()
+        });
+    });
+</script>
+<script>
+       var url_string = location.href;
+       var url = new URL(url_string);
+       var category = url.searchParams.get("category");
+       if (category != null) {
+            document.getElementById("cate_" + category).setAttribute('selected', 'selected');
+       }
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        if ($('#filterByCategory').val() == null) {
+            $('#btnSearch').click(function () {
+                window.location = '/admin/product?search=' + $('#txtSearch').val()
+            });
+        }else{
+            $('#btnSearch').click(function () {
+                window.location = '/admin/product?category=' + $('#filterByCategory').val() + '&search=' + $('#txtSearch').val()
+            });
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#errMsg').fadeOut();
+        }, 2000); // <-- time in milliseconds
+    });
+</script>
+
+@*<script>
+    $(document).ready(function () {
+       if ($("#fileInput").get(0).files.length === 0) {
+            $("#btnFileInput").attr("disabled", true);
+        } else {
+            $(":submit").removeAttr("disabled");
+       }
+    });
+</script>*@

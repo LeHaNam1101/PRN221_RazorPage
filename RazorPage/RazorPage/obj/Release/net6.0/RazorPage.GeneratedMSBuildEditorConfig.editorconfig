@@ -1,0 +1,117 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = RazorPage
+build_property.RootNamespace = RazorPage
+build_property.ProjectDir = D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RazorPage\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\HOCTAPFPT\Ki8SEFPT\RazorPage\RazorPage\RazorPage
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/Cart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxDYXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/Forgot.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxGb3Jnb3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/Order.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxPcmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/SignIn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxTaWduSW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/SignOut.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxTaWduT3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Account/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxTaWduVXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/Activation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWN0aXZhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/CreateCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ3JlYXRlQ3VzdG9tZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/CreateProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ3JlYXRlUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/Customer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ3VzdG9tZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/Order.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cT3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/OrderDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cT3JkZXJEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Admin/Product.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Category.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Product/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Shared/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/Shared/_LayoutHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXRIb21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HOCTAPFPT/Ki8SEFPT/RazorPage/RazorPage/RazorPage/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

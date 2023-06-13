@@ -1,0 +1,205 @@
+﻿@page
+@model RazorPage.Pages.Admin.DashboardModel
+@{
+    var get_year = Model.TotalOrder.GroupBy(x => x.OrderDate.Value.Year).ToList();
+
+    decimal weeklySale = 0;
+    decimal totalOrder = 0;
+    decimal janSale = 0;
+    decimal febSale = 0;
+    decimal marSale = 0;
+    decimal aprSale = 0;
+    decimal maySale = 0;
+    decimal junSale = 0;
+    decimal julySale = 0;
+    decimal augSale = 0;
+    decimal sepSale = 0;
+    decimal octSale = 0;
+    decimal novSale = 0;
+    decimal decSale = 0;
+
+
+    foreach (var item in Model.Orders)
+    {
+        weeklySale += (decimal)item.Freight;
+    }
+
+    foreach (var item in Model.TotalOrder)
+    {
+        totalOrder += (decimal)item.Freight;
+        if (item.OrderDate.HasValue)
+        {
+            if (item.OrderDate.Value.Month == 1 && item.OrderDate.Value.Year == Model.Year)
+            {
+                janSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 2 && item.OrderDate.Value.Year == Model.Year)
+            {
+                febSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 3 && item.OrderDate.Value.Year == Model.Year)
+            {
+                marSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 4 && item.OrderDate.Value.Year == Model.Year)
+            {
+                aprSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 5 && item.OrderDate.Value.Year == Model.Year)
+            {
+                maySale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 6 && item.OrderDate.Value.Year == Model.Year)
+            {
+                junSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 7 && item.OrderDate.Value.Year == Model.Year)
+            {
+                julySale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 8 && item.OrderDate.Value.Year == Model.Year)
+            {
+                augSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 9 && item.OrderDate.Value.Year == Model.Year)
+            {
+                sepSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 10 && item.OrderDate.Value.Year == Model.Year)
+            {
+                octSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 11 && item.OrderDate.Value.Year == Model.Year)
+            {
+                novSale += (decimal)item.Freight;
+            }
+            if (item.OrderDate.Value.Month == 12 && item.OrderDate.Value.Year == Model.Year)
+            {
+                decSale += (decimal)item.Freight;
+            }
+        }
+    }
+}
+    <div id="content-left">
+        <ul>
+            <a href="~/admin/dashboard">
+            <li>Dashboard</li></a>
+            <a href="~/admin/order">
+            <li>Orders</li></a>
+            <a href="~/admin/product">
+            <li>Products</li></a>
+            <a href="~/admin/customer">
+            <li>Customers</li></a>
+        </ul>
+    </div>
+            <div id="content-right">
+                <div class="path-admin">DASHBOARD</div>
+                <div class="content-main">
+                    <div id="content-main-dashboard">
+                        <div id="dashboard-1">
+                            <div id="dashboard-1-container">
+                                <div class="dashboard-item">
+                                    <div class="dashboard-item-title">Weekly Sales</div>
+                                    <div class="dashboard-item-content">
+                                        $ @String.Format("{0:.##}", weeklySale)
+                                    </div>
+                                </div>
+                                <div class="dashboard-item">
+                                    <div class="dashboard-item-title">Total Orders</div>
+                                    <div class="dashboard-item-content">
+                                        $ @String.Format("{0:.##}", totalOrder)
+                                    </div>
+                                </div>
+                                <div class="dashboard-item">
+                                    <div class="dashboard-item-title">Total Customers</div>
+                                    <div class="dashboard-item-content">@Model.Customer.Count</div>
+                                </div>
+                                <div class="dashboard-item">
+                                    <div class="dashboard-item-title">Total Guest</div>
+                                    <div class="dashboard-item-content">@(Model.Customer.Count + Model.Employees.Count)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dashboard-2">
+                            <select id="filterByYear">
+                                <option selected disabled>-----Select year----</option>
+                                @foreach (var year in get_year)
+                                {
+                                    <option id="year_@year.Key" value="@year.Key">@year.Key</option>
+                                }
+                            </select>
+                            <div id="chart" style="text-align: center;">
+                                <div id="chart1">
+                                    <h3>Statistic Orders (Month)</h3>
+                                    <canvas id="myChart1" style="width: 100%;"></canvas>
+                                </div>
+                                <div id="chart2">
+                                    <canvas id="myChart2" style="width: 80%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script>
+        function OrdersChart() {
+            var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+            new Chart("myChart1", {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        data: [@janSale, @febSale, @marSale, @aprSale, @maySale, @junSale, @julySale, @augSale, @sepSale, @octSale, @novSale, @decSale],
+                        borderColor: "sienna",
+                        fill: true
+                    }]
+                },
+                options: {
+                    legend: { display: false }
+                }
+            });
+        }
+
+        function CustomersChart() {
+            var xValues = ["Total", "New customer"];
+            var yValues = [@Model.TotalAccounts.Count, @Model.Accounts.Count, @(Model.TotalAccounts.Count + 5)];
+            var barColors = ["green", "red"];
+
+            new Chart("myChart2", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: "New Customers (30 daily Avg)"
+                    }
+                }
+            });
+        }
+
+        OrdersChart();
+        CustomersChart();
+    </script>
+
+    <script>
+            document.getElementById('filterByYear').addEventListener('change', function () {
+                window.location = '/admin/dashboard?year=' + document.getElementById('filterByYear').value
+            });
+    </script>
+
+    <script>
+        var url_string = location.href;
+        var url = new URL(url_string);
+        var year = url.searchParams.get("year");
+        if (year != null) {
+            document.getElementById("year_" + year).setAttribute('selected', 'selected');
+        }
+    </script>

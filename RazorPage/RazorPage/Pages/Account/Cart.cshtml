@@ -1,0 +1,109 @@
+﻿@page
+@model RazorPage.Pages.Account.CartModel
+@{
+    var total_product = 0;
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+<div id="cart">
+    <div id="cart-title">
+        <h3>SHOPPING CART</h3>
+    </div>
+    @if(Model.MyCart == null ){
+        <h3>You are not shopping anything yet, please buy something</h3>
+    }
+    else
+    {
+        <div id="cart-content">
+            @foreach (var item in Model.MyCart)
+            {
+                total_product += item.Quantity;
+                <div class="cart-item">
+                    <div class="cart-item-infor">
+                        <div class="cart-item-img">
+                            <img src="~/img/1.jpg" />
+                        </div>
+                        <div class="cart-item-name">
+                            <a href="detail.html?id=1">@item.Product.ProductName</a>
+                        </div>
+                        <div class="cart-item-price">
+                            @(System.Math.Round(item.Quantity * (decimal)item.Product.UnitPrice, 0)) $
+                        </div>
+                        <div class="cart-item-button">
+                            <a asp-page="cart" asp-page-handler="delete" asp-route-id="@item.Product.ProductId">Remove</a>
+                        </div>
+                    </div>
+                    <div class="cart-item-function">
+                        <a asp-page="cart" asp-page-handler="minus" asp-route-id="@item.Product.ProductId">-</a>
+                        <a asp-page="cart" asp-page-handler="add" asp-route-id="@item.Product.ProductId">+</a>
+                        <input type="text" value="@item.Quantity" disabled />
+                    </div>
+                </div>
+            }
+        </div>
+    <div id="cart-summary">
+            <div id="cart-summary-content">Total product: <span style="color:red">@total_product product</span></div>
+            <div id="cart-summary-content">Total amount: <span style="color:red">@Model.Total $</span></div>
+    </div>
+        <div class="msg-error" style="text-align:left">
+            @ViewData["msg"]
+        </div>
+    <form method="post">
+        <div id="customer-info">
+            <div id="customer-info-content">
+                <h3>CUSTOMER INFORMATION:</h3>
+                <div id="customer-info-detail">
+                    <div id="customer-info-left">
+                        @if(HttpContext.Session.GetString("CusSession") == null)
+                        {
+                            <input type="hidden" asp-for="Customer.CustomerId" value="NULL">
+                        }
+                        else{
+                            <input type="hidden" asp-for="Customer.CustomerId">
+                        }
+
+                        <label>Company name<span style="color: red;">*</span></label><br />
+                        <input asp-for="Customer.CompanyName">
+                        <span asp-validation-for="Customer.CompanyName" class="msg-error"></span>
+                        <label>Contact name<span style="color: red;">*</span></label><br />
+                        <input asp-for="Customer.ContactName">
+                        <span asp-validation-for="Customer.ContactName" class="msg-error"></span>
+                    </div>
+                    <div id="customer-info-right">
+                        <label>Contact Title<span style="color: red;">*</span></label><br />
+                        <input asp-for="Customer.ContactTitle">
+                        <span asp-validation-for="Customer.ContactTitle" class="msg-error"></span>
+                        <label>Address<span style="color: red;">*</span></label><br />
+                        <input asp-for="Customer.Address">
+                        <span asp-validation-for="Customer.Address" class="msg-error"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="customer-info">
+            <div id="customer-info-content">
+                <h3>PAYMENT METHODS:</h3>
+                <div id="customer-info-payment">
+                    <div>
+                        <input type="radio" name="rbPaymentMethod" checked />
+                        Payment C.O.D - Payment on delivery
+                    </div>
+                    <div>
+                        <input type="radio" name="rbPaymentMethod" disabled />
+                        Payment via online payment gateway
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cart-order">
+            <input type="submit" value="ORDER" />   
+        </div>
+    </form>
+
+    }
+</div>
+}

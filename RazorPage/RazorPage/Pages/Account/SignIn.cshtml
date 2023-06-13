@@ -1,0 +1,35 @@
+﻿@page
+@model RazorPage.Pages.Account.SignInModel
+@{
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+<div id="form">
+    <div id="form-title">
+        <span><a href="~/account/signup">SIGN UP</a></span>
+        <span><a href="~/account/signin" style="color: red;">SIGN IN</a></span>
+    </div>
+    <div id="form-content">
+        <div class="msg-error" style="text-align: left">
+            @ViewData["msg"]
+        </div>
+        <form method="post">
+            <input asp-for="Account.AccountId" type="hidden" value="0"/>
+            <label>Email<span style="color: red;">*</span></label><br />
+            <input asp-for="Account.Email"/><br />
+            <span class="msg-error" asp-validation-for="Account.Email"></span><br />
+            <label>Password<span style="color: red;">*</span></label><br />
+            <input asp-for="Account.Password"/><br />
+            <span class="msg-error" asp-validation-for="Account.Password"></span><br />
+            <div><a href="~/account/forgot">Forgot password?</a></div>
+            <input type="submit" value="SIGN IN" /><br />
+            <input type="button" value="FACEBOOK LOGIN" style="background-color: #3b5998;" /><br />
+            <input type="button" value="ZALO LOGIN" style="background-color: #009dff;margin-bottom: 30px;" />
+        </form>
+    </div>
+</div>
+}

@@ -1,0 +1,102 @@
+﻿@page
+@model RazorPage.Pages.Account.OrderModel
+@{
+    var index = 1;
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+@if (HttpContext.Session.GetString("CusSession") == null){
+    <h1>
+        You have not logged in
+    </h1>
+}else{
+<div id="content-left">
+    <h3 style="font-weight: normal;">Welcome, Phạm Ngọc Minh Châu</h3>
+    <h3>Account Management</h3>
+    <ul>
+        <a href="~/account/profile">
+        <li>Personal information</li></a>
+    </ul>
+    <h3>My order</h3>
+    <ul>
+        <a href="~/account/order">
+        <li>All orders</li></a>
+        <a href="#">
+        <li>Canceled order</li></a>
+    </ul>
+</div>
+<div id="content-right">
+    <div class="path">LIST ORDERS</div>
+    <div class="content-main">
+        <div id="profile-content-order">
+            @if (Model.Order.Count > 0)
+            {
+            @foreach (var order in Model.Order)
+            {
+                <div>
+                    <div class="profile-order-title" onclick="show_hide_order(@Html.DisplayFor(orderItem => order.OrderId))">
+                        <div class="profile-order-title-left">
+                                <div>Order creation date: @Convert.ToDateTime(order.OrderDate).ToString("dd/MM/yyyy")</div>
+                            <div>Order: <a href="#">#@index</a></div>
+                        </div>
+                        <div class="profile-order-title-right">
+                            @if (order.ShippedDate != null)
+                            {
+                                <span style="color: green">complete</span>
+                            }
+                            else
+                            {
+                                <span>pending</span>
+                            }
+                        </div>
+                    </div>
+                    @foreach (var detail in Model.OrderDetail)
+                    {
+                        @if (detail.OrderId == order.OrderId)
+                            {
+                             <div class ="@Html.DisplayFor(detailItem => detail.OrderId)" style="display:none">
+                                <div class="profile-order-content">
+                                    <div class="profile-order-content-col1">
+                                        <a href="detail.html"><img src="~/img/2.jpg" width="100%" /></a>
+                                    </div>
+                                    <div class="profile-order-content-col2">
+                                        @Html.DisplayFor(detailItem => detail.Product.ProductName)
+                                    </div>
+                                    <div class="profile-order-content-col3">
+                                        Quantity: @Html.DisplayFor(detailItem => detail.Quantity)
+                                    </div>
+                                    <div class="profile-order-content-col4">
+                                        $@Html.DisplayFor(detailItem => detail.UnitPrice)
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                    }
+
+            </div>
+                index++;
+            }
+            }else{
+                <h2 style="color: red">You have not order anything</h2>
+            }
+        </div>
+    </div>
+</div>
+}
+}
+<script>
+    function show_hide_order(id) {
+        var x = document.getElementsByClassName(id);
+        for (var i = 0; i < x.length; i++) {
+            if (x[i].style.display === "none") {
+                x[i].style.display = "flex";
+            } else {
+                x[i].style.display = "none";
+            }
+        }
+    }
+</script>

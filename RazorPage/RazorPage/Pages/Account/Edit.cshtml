@@ -1,0 +1,75 @@
+﻿@page
+@model RazorPage.Pages.Account.EditModel
+@{
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+@if (HttpContext.Session.GetString("CusSession") == null)
+{
+    <h1>
+        You have not logged in
+    </h1>
+}
+else
+{
+    <div id="content-left">
+        <h3 style="font-weight: normal;">Welcome, @Model.Account.Customer.ContactName</h3>
+        <h3>Account Management</h3>
+        <ul>
+            <a href="~/account/profile">
+            <li>Personal information</li></a>
+        </ul>
+        <h3>My order</h3>
+        <ul>
+            <a href="~/account/order">
+            <li>All orders</li></a>
+            <a href="#">
+            <li>Canceled order</li></a>
+        </ul>
+    </div>
+    <div id="content-right">
+        <div class="path">Personal information</div>
+        <form method="post">
+            <div class="content-main">
+                <div id="profile-content">
+                    <div class="profile-content-col">
+                        <input type="hidden" asp-for="Account.AccountId">
+                        <input type="hidden" asp-for="Account.Email">
+                        <input type="hidden" asp-for="Account.Password">
+                        <input type="hidden" asp-for="Account.Customer.CustomerId">
+                        <input type="hidden" asp-for="Account.Role">
+                        <div>Company name: <br />
+                            <input asp-for="Account.Customer.CompanyName">
+                            <span asp-validation-for="Account.Customer.CompanyName" class="msg-error"></span>
+                        </div>
+                        <div>Contact name: <br />
+                            <input asp-for="Account.Customer.ContactName">
+                            <span asp-validation-for="Account.Customer.ContactName" class="msg-error"></span>
+                        </div>
+                        <div>
+                            <input type="submit" value="Save info"/>
+                        </div>
+                    </div>
+                    <div class="profile-content-col">
+                        <div>Contact title: <br />
+                            <input asp-for="Account.Customer.ContactTitle">
+                            <span asp-validation-for="Account.Customer.ContactTitle" class="msg-error"></span>
+                        </div>
+                        <div>Address: <br />
+                            <input asp-for="Account.Customer.Address">
+                            <span asp-validation-for="Account.Customer.Address" class="msg-error"></span>
+                        </div>
+                    </div>
+                    <div class="profile-content-col">
+                        <div>Email: <br />@Model.Account.Email</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+}

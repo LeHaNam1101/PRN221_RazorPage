@@ -1,0 +1,67 @@
+﻿@page
+@model RazorPage.Pages.IndexModel
+@{
+    var hot_product = Model.Product.OrderBy(p => p.UnitsInStock).Take(5);
+
+    var top_sale_product = Model.Product.Where(p => p.OrderDetails.OrderBy(d => d.Discount).Any()).Take(5);
+
+    var new_product = Model.Product.OrderByDescending(p => p.ProductId).Take(5);
+}
+@if (HttpContext.Session.GetString("EmpSession") != null)
+{
+    Response.Redirect("/admin/dashboard");
+}
+else
+{
+<div id="content-left">
+    <h3>CATEGORY</h3>
+    <ul>
+        @foreach (var cate in Model.Category)
+        {
+            <a asp-page="./category" asp-route-id="@cate.CategoryId">
+                <li>
+                    @Html.DisplayFor(modelCate => cate.CategoryName)
+                </li>
+            </a>
+        }
+    </ul>
+</div>
+<div id="content-right">
+    <div class="path">Hot</div>
+    <div class="content-main">
+        @foreach (var hot in hot_product)
+        {
+            <div class="product">
+                <a href="~/product/detail"><img src="img/1.jpg" width="100%" /></a>
+                <div class="name"><a asp-page="/product/detail" asp-route-id="@hot.ProductId">@Html.DisplayFor(hot_p => hot.ProductName)</a></div>
+                <div class="price">$ @Html.DisplayFor(hot_p => hot.UnitPrice)</div>
+                <div><a asp-page="./account/cart" asp-page-handler="buy" asp-route-id="@hot.ProductId">Buy now</a></div>
+            </div>
+        }
+    </div>
+    <div class="path">Best Sale</div>
+    <div class="content-main">
+        @foreach (var top in top_sale_product)
+        {
+            <div class="product">
+                <a href="~/product/detail"><img src="img/1.jpg" width="100%" /></a>
+                <div class="name"><a asp-page="/product/detail" asp-route-id="@top.ProductId">@Html.DisplayFor(top_s => top.ProductName)</a></div>
+                <div class="price">$ @Html.DisplayFor(top_s => top.UnitPrice)</div>
+                <div><a asp-page="./account/cart" asp-page-handler="buy" asp-route-id="@top.ProductId">Buy now</a></div>
+            </div>
+        }
+    </div>
+    <div class="path">New Product</div>
+    <div class="content-main">
+        @foreach (var new_p in new_product)
+        {
+            <div class="product">
+                <a href="~/product/detail"><img src="img/1.jpg" width="100%" /></a>
+                <div class="name"><a asp-page="/product/detail" asp-route-id="@new_p.ProductId">@Html.DisplayFor(new_pro => new_p.ProductName)</a></div>
+                <div class="price">$ @Html.DisplayFor(new_pro => new_p.UnitPrice)</div>
+                <div><a asp-page="./account/cart" asp-page-handler="buy" asp-route-id="@new_p.ProductId">Buy now</a></div>
+            </div>
+        }
+    </div>
+</div>
+}

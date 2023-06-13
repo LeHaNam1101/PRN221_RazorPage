@@ -1,0 +1,213 @@
+﻿@page
+@model RazorPage.Pages.Admin.OrderModel
+@{
+}
+<div id="content-left">
+    <ul>
+        <a href="~/admin/dashboard">
+        <li>Dashboard</li></a>
+        <a href="~/admin/order">
+        <li>Orders</li></a>
+        <a href="~/admin/product">
+        <li>Products</li></a>
+        <a href="~/admin/customer">
+        <li>Customers</li></a>
+    </ul>
+</div>
+<div id="content-right">
+    <div class="path-admin">ORDERS LIST</div>
+    <div class="content-main">
+        <div id="content-main-dashboard">
+            <div id="order-title">
+                <b>Filter by Order date:</b>
+                <form class="form-inline" method="get">
+                    <div class="form-group mb-2">
+                        From: <input class="ml-3" type="text" id="from" autocomplete="off">
+                        <input type="hidden" id="fromDate" asp-for="@Model.fromDate"/>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        To: <input class="ml-3" type="text" id="to" autocomplete="off" />
+                        <input type="hidden" id="toDate" asp-for="@Model.toDate" />
+                    </div>
+                    <button id="filter" class="btn btn-outline-success mb-2 ml-3" type="submit">Filter</button>
+                </form>
+                <form method="post" asp-route-pageNo="@Model.PageNo" asp-route-pageSize="@Model.PageSize" asp-page-handler="Export">
+                    <input type="hidden" name="fromDate" id="fromDateExport" asp-for="@Model.fromDate" value="1996-09-11 00:00:00.000"/>
+                    <input type="hidden" name="toDate" id="toDateExport" asp-for="@Model.toDate" value="@DateTime.Now"/>
+                    <input type="hidden" name="status" id="statusExport"/>
+                    <button class="btn btn-outline-dark" type="submit">Export</button>
+                </form>
+                <div class="d-flex justify-content-end">
+                    <div class="form-group">
+                        <select id="filterByStatus" class="form-control">
+                          <option selected disabled>-----Filter by status-----</option>
+                          <option id="complete" value="complete">Complete</option>
+                          <option id="pending" value="pending">Pending</option>
+                          <option id="cancel" value="cancel">Cancel</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="order-table">
+                <table id="orders">
+                    <tr>
+                        <th>OrderID</th>
+                        <th>OrderDate</th>
+                        <th>RequiredDate</th>
+                        <th>ShippedDate</th>
+                        <th>Customer</th>
+                        <th>Freight($)</th>
+                        <th>Status</th>
+                    </tr>
+                    @foreach (var od in Model.Orders)
+                    {
+                        <tr>
+                            <td><a asp-page="orderdetail" asp-route-id="@od.OrderId">@od.OrderId</a></td>
+                            <td>@od.OrderDate</td>
+                            <td>@od.RequiredDate</td>
+                            <td>@od.ShippedDate</td>
+                            @if (@od.Customer != null)
+                            {
+                                <td>@od.Customer.ContactName</td>
+                            }else{
+                                <td><i>NULL</i></td>
+                            }
+                            @if (od.Freight != null)
+                            {
+                                <td>
+                                    $ @String.Format("{0:.##}", od.Freight)
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    $ 0
+                                </td>
+                            }
+                            @if (od.ShippedDate != null )
+                            {
+                                <td style="color: green;">Completed</td>
+                            }
+                            @if (od.RequiredDate != null && od.ShippedDate == null)
+                            {
+                                <td style="color: blue;">Pending | <a asp-page="order" asp-page-handler="cancel" asp-route-pageNo="@Model.PageNo" asp-route-pageSize="@Model.PageSize" asp-route-id="@od.OrderId">Cancel</a></td>
+                            }
+                            @if (od.RequiredDate == null)
+                            {
+                                <td style="color: red;">Order canceled</td>
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+            <br />
+            <paging class="pagination pagination-wrap" total-records="@Model.TotalOrders"
+                    show-total-pages="false" show-total-records="false"
+                    page-size="@Model.PageSize" page-no="@Model.PageNo"></paging>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/libs/css/bootstrap.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script>
+    $(function () {
+        $("#from").datepicker();
+        $("#from").datepicker("option", "showAnim", "slide");
+
+        $("#to").datepicker();
+        $("#to").datepicker("option", "showAnim", "slide");
+
+    });
+
+    $("#from").on('change', function () {
+        $("#fromDate").val(this.value);
+        $("#fromDateExport").val(this.value);
+    });
+
+    $("#to").on('change', function () {
+        $("#toDate").val(this.value);
+        $("#toDateExport").val(this.value);
+    });
+
+    $("#filter").click(function (event) {
+
+        function isValidDate(dateString) {
+            // First check for the pattern
+            if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+                return false;
+
+            // Parse the date parts to integers
+            var parts = dateString.split("/");
+            var day = parseInt(parts[1], 10);
+            var month = parseInt(parts[0], 10);
+            var year = parseInt(parts[2], 10);
+
+            // Check the ranges of month and year
+            if (year < 1000 || year > 3000 || month == 0 || month > 12)
+                return false;
+
+            var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            // Adjust for leap years
+            if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+                monthLength[1] = 29;
+
+            // Check the range of the day
+            return day > 0 && day <= monthLength[month - 1];
+        };
+
+        if ($("#to").val() < $("#from").val()) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'From date is after to date!! Try again',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            event.preventDefault();
+        }
+
+        if (!isValidDate($("#to").val()) || !isValidDate($("#from").val())) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Your date is not valid!! Try again',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            event.preventDefault();
+        }
+
+        if ($("#to").val() == "" || $("#from").val() == "") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Your date is null!! Try again',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            event.preventDefault();
+        }
+    });
+</script>
+
+<script>
+    document.getElementById('filterByStatus').addEventListener('change', function () {
+        window.location = '/admin/order?status=' + document.getElementById('filterByStatus').value;
+    });
+</script>
+
+<script>
+    var url_string = location.href;
+    var url = new URL(url_string);
+    var status = url.searchParams.get("status");
+    if (status != null) {
+        document.getElementById(status).setAttribute('selected', 'selected');
+        $("#statusExport").val(status);
+    }
+</script>
